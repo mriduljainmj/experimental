@@ -37,7 +37,8 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts, (jwt_payload, done) => 
 
 }));
 
-exports.verifyUser = function (req, res, next) {
+exports.verifyUser = passport.authenticate('jwt',{session:false});
+/*{
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
         jwt.verify(token, config.secretKey, function (err, decoded) {
@@ -56,9 +57,9 @@ exports.verifyUser = function (req, res, next) {
         return next(err);
     }
 };
-
+*/
 exports.verifyAdmin = function (req, res, next) {
-    if (req.user.admin) {
+    if (req.User.admin===true) {
         next();
     } else {
         var err = new Error('You are not authorized to perform this operation!');

@@ -7,6 +7,7 @@ var session = require('express-session');
 var file = require('session-file-store')(session);
 var passport = require('passport');
 var authenticate = require('./authenticate');
+const uploadRouter = require('./routes/uploadRouter');
 
 var config = require('./config');
 
@@ -15,6 +16,7 @@ var usersRouter = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
+/*var favoriteRouter = require('./routes/favRoute');*/
 
 const mongoose = require('mongoose');
 
@@ -45,11 +47,14 @@ app.use(session({
   store: new file()
 }));
 
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -58,6 +63,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/imageUpload',uploadRouter);
+/*app.use('/favorites', favoriteRouter);*/
 
 
 // catch 404 and forward to error handler
