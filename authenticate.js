@@ -58,12 +58,13 @@ exports.verifyUser = passport.authenticate('jwt',{session:false});
     }
 };
 */
-exports.verifyAdmin = function (req, res, next) {
-    if (req.User.admin===true) {
+exports.verifyAdmin = (req, res, next)=> {
+    if (req.user.username ==="admin") {
+        console.log("Login as admin")
         next();
     } else {
         var err = new Error('You are not authorized to perform this operation!');
         err.status = 403;
         return next(err);
     }
-}
+};

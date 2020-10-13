@@ -20,7 +20,7 @@ dishRouter.route('/')
             }, (err) => next(err)).catch((err) => next(err));
     })
 
-    .post(authenticate.verifyUser,(req, res, next) => {
+    .post(authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
         Dishes.create(req.body).then((dish) => {
             res.statusCode = 201;
             res.setHeader("Content-Type", "application/json");
